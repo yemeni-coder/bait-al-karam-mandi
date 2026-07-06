@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     safeSet("baitalkaram_lang", lang);
     if (typeof syncTopbarOffset === "function") syncTopbarOffset();
+    if (typeof setupTaglineTicker === "function") setupTaglineTicker();
   }
 
   const savedLang = safeGet("baitalkaram_lang");
