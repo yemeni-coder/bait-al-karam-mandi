@@ -1,0 +1,65 @@
+BAIT AL KARAM — DISH PHOTO NAMES
+Name each photo you send after the key on the left.
+Later just say: "this photo is <key>" and it gets swapped in.
+====================================================
+
+MEAT / الحم
+  haneeth-shoulder     = Haneeth Shoulder / لحم كتف حنيذ (AED 90)
+  haneeth-janb         = Haneeth Janb / لحم جنب حنيذ (AED 90)
+  janb-mandi           = Janb Mandi / جنب مندي (AED 90)
+  shoulder-mandi       = Shoulder Mandi / كتف مندي (AED 90)
+  meat-mandi           = Meat Mandi / لحم مندي (AED 60)
+  meat-madfoon         = Meat Madfoon / لحم مدفون (AED 60)
+  meat-madbi           = Meat Madbi / لحم مظبي (AED 65)
+  meat-waslah          = Meat Waslah / لحم وصلة (AED 40)
+  meat-burma           = Meat Burma / لحم برمة (AED 60)
+  local-meat           = Local Meat / لحم بلدي (AED 90)
+
+CHICKEN / الدجاج
+  chicken-mandi        = Chicken Mandi / دجاج مندي (AED 33)
+  chicken-madbi        = Chicken Madbi / دجاج مظبي (AED 35)
+  chicken-madfoon      = Chicken Madfoon / دجاج مدفون (AED 35)
+  chicken-madghot      = Chicken Madghot / دجاج مظغوط (AED 35)
+  chicken-kabsa        = Chicken Kabsa / دجاج كبسة (AED 35)
+  chicken-zorbian      = Chicken Zorbian / دجاج زربيان (AED 35)
+  chicken-beryani      = Chicken Beryani / دجاج برياني (AED 30)
+
+FISH / الأسماك
+  sherry-fish          = Sherry Fish / سمك شعري (AED 55)
+  king-fish            = King Fish / سمك كنعد (AED 55)
+  hamor-fish           = Hamor Fish / سمك هامور (AED 55)
+  supreme-fish         = Supreme Fish / سمك سبريم (AED 55)
+  salmon-fish          = Salmon Fish / سمك سلمون (AED 55)
+  farsh-grilled        = Farsh Grilled / فرش مشوي (AED 60)
+
+SALADS / السلطات
+  arabic-salad         = Arabic Salad / سلطة عربية (AED 18)
+  gergir-salad         = Gergir Salad / سلطة جرجير (AED 15)
+  yoghurt-cucumber     = Yoghurt Cucumber / روب بالخيار (AED 15)
+  shafoot              = Shafoot / شفوت (AED 10)
+  hommus               = Hommus / حمص (AED 15)
+  fattoush             = Fattoush / فتوش (AED 20)
+  greek-salad          = Greek Salad / سلطة يونانية (AED 20)
+  tabboulah            = Tabboulah / تبولة (AED 20)
+
+SWEETS / الحلويات
+  kunafa-cream         = Kunafa Cream / كنافة قشطة (AED 15)
+  kunafa-nutella       = Kunafa Nutella / كنافة نوتيلا (AED 20)
+  kunafa-cheese        = Kunafa Cheese / كنافة بلجبن (AED 15)
+  date-fatta           = Date Fatta / فتة تمر عادي (AED 12)
+  basbousa             = Basbousa / بسبوسة (AED 7/10)
+  oman-sweets          = Oman Sweets / حلوى عمان (AED 10)
+
+JUICES / العصائر
+  orange-juice         = Orange / برتقال (AED 18)
+  mango-juice          = Mango / مانجو (AED 18)
+  raisin-juice         = Raisin / زبيب (AED 10)
+  apple-juice          = Apple / تفاح (AED 18)
+  watermelon-juice     = Water Melon / بطيخ (AED 18)
+  pineapple-juice      = Pine Apple / أناناس (AED 18)
+  avocado-juice        = Avocado / أفوكادو (AED 18)
+  lemon-juice          = Lemon / ليمون (AED 15)
+  banana-shake         = Banana Milk Shake / حليب موز (AED 15)
+  grape-juice          = Grape / عنب (AED 10)
+  cold-drinks          = Cold Drinks / مشروب بارد (AED 4/10)
+  water                = Water / ماء (AED 2/4)
