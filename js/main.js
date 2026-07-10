@@ -562,7 +562,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const R = radiusPx();
       plates.forEach((p, i) => {
         if (i === selected) {
-          p.style.transform = "translate(-50%,-50%) scale(1.55)";
+          const openScale = getComputedStyle(tray).getPropertyValue("--plate-open").trim() || "2";
+          p.style.transform = `translate(-50%,-50%) scale(${openScale})`;
           p.classList.add("selected");
           p.classList.remove("dimmed");
           p.setAttribute("aria-pressed", "true");
