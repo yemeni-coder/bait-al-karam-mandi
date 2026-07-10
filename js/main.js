@@ -405,15 +405,33 @@ document.addEventListener("DOMContentLoaded", () => {
     marquee.className = "media-marquee";
     marquee.dataset.dir = direction; // "rtl" or "ltr" scroll
 
-    function track() {
+    // Build ONE track, then measure it. If it's narrower than ~1.5x the
+    // viewport, repeat the tile set until it's wide enough — otherwise a
+    // single screen can't be covered and a gap appears at the loop seam.
+    function buildTrack(repeat) {
       const t = document.createElement("div");
       t.className = "media-track";
-      tiles.forEach(makeTileEl => t.appendChild(makeTileEl()));
+      for (let r = 0; r < repeat; r++) {
+        tiles.forEach(makeTileEl => t.appendChild(makeTileEl()));
+      }
       return t;
     }
-    marquee.appendChild(track());
-    marquee.appendChild(track()); // duplicate for seamless loop
+
+    // First pass: one repetition, measure.
+    let probe = buildTrack(1);
+    probe.style.visibility = "hidden";
+    probe.style.position = "absolute";
+    marquee.appendChild(probe);
     rowEl.appendChild(marquee);
+    const oneSetWidth = probe.scrollWidth || 800;
+    marquee.removeChild(probe);
+
+    const target = Math.max(window.innerWidth * 1.5, 800);
+    const repeat = Math.max(1, Math.ceil(target / oneSetWidth));
+
+    // Two identical tracks (each repeated `repeat` times) → seamless loop.
+    marquee.appendChild(buildTrack(repeat));
+    marquee.appendChild(buildTrack(repeat));
 
     requestAnimationFrame(() => {
       const one = marquee.querySelector(".media-track");
@@ -510,6 +528,196 @@ document.addEventListener("DOMContentLoaded", () => {
       d.innerHTML = `<span class="vp-icon">${icon}</span><span class="vp-label">${label}</span>`;
       return d;
     }
+  })();
+
+  /* ============================================================
+     Signature dishes — the tray
+     Plates sit evenly around a circle. Each plate's transform is
+     rotate(angle) → translate(radius) → rotate(-angle), so the plate
+     rides the circle but stays upright. Dragging spins the whole ring;
+     tapping a plate glides it to the centre and enlarges it, and
+     tapping again returns it. Works with any number of dishes.
+  ============================================================ */
+  (function initTray() {
+    const tray = document.getElementById("tray");
+    const platesWrap = document.getElementById("trayPlates");
+    const caption = document.getElementById("trayCaption");
+    if (!tray || !platesWrap || typeof SIGNATURE === "undefined" || !SIGNATURE.length) return;
+
+    const N = SIGNATURE.length;
+    let rotation = -90;        // start with the first dish at the top
+    let selected = -1;
+    let plates = [];
+    let dragging = false, dragged = false, lastAngle = 0;
+
+    const reduceMotion = window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // plates sit ~31% of the tray's width out from the centre, chosen so
+    // each plate (and its enlarged selected state) stays fully inside the
+    // table's brass rim — nothing pokes past the edge.
+    function radiusPx() { return tray.clientWidth * 0.31; }
+
+    function layout() {
+      const R = radiusPx();
+      plates.forEach((p, i) => {
+        if (i === selected) {
+          p.style.transform = "translate(-50%,-50%) scale(1.55)";
+          p.classList.add("selected");
+          p.classList.remove("dimmed");
+          p.setAttribute("aria-pressed", "true");
+        } else {
+          const a = rotation + (360 / N) * i;
+          p.style.transform =
+            `translate(-50%,-50%) rotate(${a}deg) translate(${R}px) rotate(${-a}deg)`;
+          p.classList.remove("selected");
+          p.classList.toggle("dimmed", selected !== -1);
+          p.setAttribute("aria-pressed", "false");
+        }
+      });
+    }
+
+    function showCaption() {
+      if (selected === -1) {
+        caption.innerHTML =
+          `<p class="hint"><span class="ar">اسحب الطاولة لتديرها · اضغط طبقًا لتراه عن قرب</span>` +
+          `<span class="en">Drag the table to turn it · tap a dish to see it up close</span></p>`;
+        return;
+      }
+      const d = SIGNATURE[selected];
+      caption.innerHTML =
+        `<h3><span class="ar">${d.ar}</span><span class="en">${d.en}</span></h3>` +
+        `<span class="price">${d.price}</span>` +
+        `<p><span class="ar">${d.descAr}</span><span class="en">${d.descEn}</span></p>`;
+    }
+
+    function toggle(i) {
+      selected = (selected === i) ? -1 : i;
+      layout();
+      showCaption();
+    }
+
+    function build() {
+      platesWrap.innerHTML = "";
+      plates = SIGNATURE.map((d, i) => {
+        const b = document.createElement("button");
+        b.className = "plate";
+        b.type = "button";
+        b.setAttribute("aria-pressed", "false");
+        b.setAttribute("aria-label", d.en + " — " + d.price);
+        b.innerHTML = `<img src="${d.img}" alt="${d.en}">`;
+        const img = b.querySelector("img");
+        img.onerror = () => { img.onerror = null; b.style.background = "var(--clay)"; img.remove(); };
+        b.addEventListener("click", (e) => {
+          if (dragged) return;
+          if (selected === -1) { toggle(i); e.stopPropagation(); }
+          // if something is already open, let the document handler below
+          // decide (close, or switch to this plate)
+        });
+        platesWrap.appendChild(b);
+        return b;
+      });
+      layout();
+    }
+
+    /* ---- drag to spin ---- */
+    function angleFromEvent(e) {
+      const r = tray.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const pt = e.touches ? e.touches[0] : e;
+      return Math.atan2(pt.clientY - cy, pt.clientX - cx) * 180 / Math.PI;
+    }
+    function down(e) {
+      if (selected !== -1) return;      // don't spin while a dish is centred
+      dragging = true; dragged = false;
+      lastAngle = angleFromEvent(e);
+    }
+    function move(e) {
+      if (!dragging) return;
+      const a = angleFromEvent(e);
+      let delta = a - lastAngle;
+      if (delta > 180) delta -= 360;
+      if (delta < -180) delta += 360;
+      if (Math.abs(delta) > 1) dragged = true;
+      rotation += delta;
+      lastAngle = a;
+      plates.forEach(p => p.style.transition = "none");  // no glide while dragging
+      layout();
+    }
+    function up() {
+      if (!dragging) return;
+      dragging = false;
+      requestAnimationFrame(() => { plates.forEach(p => p.style.transition = ""); });
+      setTimeout(() => { dragged = false; }, 0);   // click fires right after mouseup
+    }
+
+    tray.addEventListener("mousedown", down);
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    tray.addEventListener("touchstart", down, { passive: true });
+    tray.addEventListener("touchmove", move, { passive: true });
+    tray.addEventListener("touchend", up);
+
+    tray.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft")  { rotation -= 360 / N; layout(); }
+      if (e.key === "ArrowRight") { rotation += 360 / N; layout(); }
+      if (e.key === "Escape" && selected !== -1) toggle(selected);
+    });
+
+    let trayResize;
+    window.addEventListener("resize", () => {
+      clearTimeout(trayResize);
+      trayResize = setTimeout(layout, 120);
+    });
+
+    /* ---- scroll spins the tray ----
+       Turning the wheel / scrolling the page rotates the tray: down turns
+       it one way, up the other. "Medium" sensitivity ≈ a third of a degree
+       per pixel scrolled. Frozen while a dish is open. rAF-throttled so it
+       stays smooth. */
+    const SCROLL_SENSITIVITY = 0.34;   // degrees of rotation per pixel scrolled
+    let lastScrollY = window.scrollY;
+    let scrollQueued = false;
+
+    function onScroll() {
+      if (scrollQueued) return;
+      scrollQueued = true;
+      requestAnimationFrame(() => {
+        scrollQueued = false;
+        const y = window.scrollY;
+        const dy = y - lastScrollY;
+        lastScrollY = y;
+        if (selected !== -1) return;            // frozen while a dish is open
+        if (!dy) return;
+        // only spend effort while the tray is roughly on-screen
+        const r = tray.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+        rotation += dy * SCROLL_SENSITIVITY;    // down = +, up = -
+        plates.forEach(p => p.style.transition = "none");  // track scroll 1:1
+        layout();
+      });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    /* ---- click anywhere to close an open dish ----
+       When a dish is enlarged in the centre, a clean click anywhere — the
+       plate itself, the empty table, or the page around it — sends it back.
+       Tapping a DIFFERENT plate switches to it. Ignored right after a drag
+       so spinning never dismisses the dish. */
+    document.addEventListener("click", (e) => {
+      if (selected === -1) return;
+      if (dragged) return;
+      const clickedPlate = e.target.closest(".plate");
+      if (clickedPlate) {
+        const idx = plates.indexOf(clickedPlate);
+        if (idx !== -1 && idx !== selected) { selected = idx; layout(); showCaption(); return; }
+      }
+      toggle(selected);   // close
+    });
+
+    build();
+    showCaption();
+    if (reduceMotion) plates.forEach(p => p.style.transition = "none");
   })();
 
 });

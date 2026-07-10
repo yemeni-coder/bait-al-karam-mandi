@@ -270,47 +270,44 @@ body.lang-ar .logo{ font-family:'Lalezar', sans-serif; font-size:22px; }
 
 .hero-visual{ position:relative; display:flex; justify-content:center; align-items:center; }
 
-/* Arch frame — a proper Sana'a qamariya window: a pointed Islamic arch
-   with a decorative double frame (outer brass border + inner cream inlay)
-   and a soft warm shadow. Bigger and more polished. */
-.arch-frame{
+/* Hero frame — shaped to the photo itself (1000x1060), so the ENTIRE
+   picture is visible: every bowl, the spoon, the cinnamon, the full
+   spread on the table. No circle, no crop. Same materials as the rest
+   of the site: brass gradient ring, cream inlay line, warm clay shadow. */
+.hero-frame{
   position:relative;
-  width:min(440px,94%);
-  aspect-ratio:5/6.4;
-  /* pointed-arch silhouette (rounded shoulders rising to a soft point) */
-  border-radius:48% 48% 8px 8px / 34% 34% 8px 8px;
-  padding:12px;                      /* space for the inner inlay ring */
+  width:min(470px,94%);
+  border-radius:22px;
+  padding:12px;                      /* the brass ring's thickness */
   background:
     linear-gradient(160deg, var(--brass), #d9a24a 45%, var(--clay-deep));
   box-shadow:
     0 26px 60px rgba(122,47,20,0.28),
     0 6px 16px rgba(36,28,21,0.18);
 }
-/* inner cream inlay line between the brass frame and the photo */
-.arch-frame::before{
+/* thin cream inlay line between the brass ring and the photo */
+.hero-frame::before{
   content:"";
   position:absolute; inset:6px;
-  border-radius:48% 48% 6px 6px / 34% 34% 6px 6px;
+  border-radius:17px;
   background:var(--sand);
   z-index:0;
 }
-.arch-frame .photo-wrap{
+/* The ratio lives HERE, on the photo — not on the frame. If it sat on the
+   frame, the 12px padding would be subtracted from each side and skew the
+   inner box, cropping a sliver off the picture. */
+.hero-frame .photo-wrap{
   position:relative; z-index:1;
-  width:100%; height:100%;
-  border-radius:46% 46% 5px 5px / 32% 32% 5px 5px;
+  width:100%;
+  aspect-ratio:1000/1060;            /* identical to the photo — zero crop */
+  border-radius:12px;
   overflow:hidden;
   box-shadow:inset 0 0 0 2px rgba(251,243,228,0.35);
 }
-.arch-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
-.arch-frame .fanlight{
-  position:absolute; top:12px; left:12px; right:12px; z-index:2;
-  width:calc(100% - 24px); height:30%;
-  mix-blend-mode:soft-light; opacity:.5;
-  pointer-events:none;
-}
+.hero-frame img{ width:100%; height:100%; object-fit:cover; display:block; }
 
 @media (max-width: 860px){
-  .arch-frame{ width:min(380px,86%); }
+  .hero-frame{ width:min(410px,86%); }
   .hero-grid{ grid-template-columns:1fr; text-align:center; }
   .hero-text .tag{ margin-inline:auto; }
   .hero-ctas, .hero-meta{ justify-content:center; }
@@ -325,7 +322,7 @@ body.lang-ar .logo{ font-family:'Lalezar', sans-serif; font-size:22px; }
 }
 .about-photo img{
   width:100%;
-  aspect-ratio:4/3.1;
+  aspect-ratio:1400/1066;   /* matches the storefront photo exactly — no crop */
   object-fit:cover;
   border-radius:var(--radius-lg);
   box-shadow:0 20px 48px rgba(122,47,20,0.22), 0 5px 14px rgba(36,28,21,0.14);
@@ -347,13 +344,177 @@ body.lang-ar .logo{ font-family:'Lalezar', sans-serif; font-size:22px; }
    Motif divider — a geometric frieze echoing the carved-gypsum bands
    ("qamariya" surrounds and cornice trims) on Yemeni tower-house facades.
    ============================================================ */
+/* Base: a single crisp row of brass teeth, transparent behind.
+   The two 45°/-45° gradients are offset by half a tile (8px) so they
+   interlock into one continuous sawtooth. */
 .motif-divider{
-  height:22px;
+    height:16px;
+    background:
+      linear-gradient(-45deg, transparent 50%, var(--brass) 50%) 0 0/16px 16px repeat-x,
+      linear-gradient(45deg, transparent 50%, var(--brass) 50%) 8px 0/16px 16px repeat-x;
+    opacity:.55;
+}
+
+/* Variant — merlons: staggered square blocks above and below a centre
+   bar, offset by half a tile so they alternate like a woven brick band.
+   Echoes the crenellated parapet along the rooftops of Yemeni tower
+   houses (see the skyline of Dar al-Hajar in the hero). The only
+   square-based divider — everything else is triangles or curves. */
+.motif-divider--merlon{
+  height:18px;
   background:
-    linear-gradient(45deg, var(--brass) 25%, transparent 25%) 0 0/22px 22px,
-    linear-gradient(-45deg, var(--brass) 25%, transparent 25%) 0 0/22px 22px,
-    var(--sand-dark);
+    repeating-linear-gradient(90deg, var(--brass) 0 9px, transparent 9px 18px) 0 0/18px 6px repeat-x,
+    linear-gradient(var(--brass), var(--brass)) 0 6px/100% 6px repeat-x,
+    repeating-linear-gradient(90deg, transparent 0 9px, var(--brass) 9px 18px) 0 12px/18px 6px repeat-x;
   opacity:.55;
+}
+
+/* Variant — a beaded chain: alternating large and small brass beads
+   threaded on a fine centre line. Lighter and more delicate than the
+   filled geometric bands above; a classic Islamic trim motif. The bead
+   radii (4px / 2px) sit well inside the 14px half-tile so beads never
+   touch and the line always reads through. */
+.motif-divider--beads{
+  height:14px;
+  background:
+    radial-gradient(circle at 50% 50%, var(--brass) 4px, transparent 4.5px) 0 0/28px 14px repeat-x,
+    radial-gradient(circle at 50% 50%, var(--brass) 2px, transparent 2.5px) 14px 0/28px 14px repeat-x,
+    linear-gradient(var(--brass), var(--brass)) 0 50%/100% 2px repeat-x;
+  opacity:.55;
+}
+
+/* Variant — an arcade: a row of small domes resting on a thin baseline.
+   Curved rather than pointed, echoing the qamariya arch in the hero and
+   the arched windows of Dar al-Hajar. The dome radius (9px) is smaller
+   than half the tile (11px), so the arches stay separated. */
+.motif-divider--arcade{
+  height:18px;
+  background:
+    radial-gradient(circle at 50% 100%, var(--brass) 9px, transparent 9px) 0 0/22px 15px repeat-x,
+    linear-gradient(var(--brass), var(--brass)) 0 15px/100% 3px repeat-x;
+  opacity:.55;
+}
+
+/* Variant — a true zigzag chevron band. NOTE: offsetting the second pair
+   of gradients diagonally (10px 10px) makes their filled corners cover
+   the first pair's gaps, collapsing the whole thing into a solid bar.
+   Offsetting horizontally (-10px 0) with the 135/225/315/45 set is what
+   actually produces the chevron. */
+.motif-divider--zigzag{
+  height:20px;
+  background:
+    linear-gradient(135deg, var(--brass) 25%, transparent 25%) -10px 0/20px 20px,
+    linear-gradient(225deg, var(--brass) 25%, transparent 25%) -10px 0/20px 20px,
+    linear-gradient(315deg, var(--brass) 25%, transparent 25%) 0 0/20px 20px,
+    linear-gradient(45deg,  var(--brass) 25%, transparent 25%) 0 0/20px 20px;
+  opacity:.55;
+}
+
+/* Variant D — two rows of teeth pointing OUTWARD (away from the gap),
+   offset by half a triangle so they interlock like a carved gypsum
+   frieze. The base sawtooth points downward, so the top row is flipped
+   vertically; the bottom row keeps its natural direction and is nudged
+   8px across to stagger against the row above. */
+.motif-divider--interlock{
+  position:relative;
+  height:40px;
+  background:none;
+  opacity:.55;
+}
+.motif-divider--interlock::before,
+.motif-divider--interlock::after{
+  content:"";
+  position:absolute; left:0; right:0;
+  height:16px;
+  background:
+    linear-gradient(-45deg, transparent 50%, var(--brass) 50%) 0 0/16px 16px repeat-x,
+    linear-gradient(45deg, transparent 50%, var(--brass) 50%) 8px 0/16px 16px repeat-x;
+}
+.motif-divider--interlock::before{
+  top:0;
+  transform:scaleY(-1);          /* flip so this row's teeth point up */
+}
+.motif-divider--interlock::after{
+  bottom:0;
+  background-position:8px 0, 16px 0;   /* stagger half a tooth */
+}
+
+/* ============================================================
+   Signature dishes — the tray
+   A round table with the dishes spaced evenly around it. Plates are
+   positioned by JS (transform: rotate → translate → counter-rotate) so
+   they always sit upright no matter how far the tray is turned.
+   Tapping a plate glides it to the centre and enlarges it.
+   ============================================================ */
+.tray-wrap{ display:flex; justify-content:center; }
+.tray{
+  position:relative;
+  width:min(520px, 92vw);
+  aspect-ratio:1/1;
+  touch-action:pan-y;            /* let the page scroll vertically over it */
+  cursor:grab;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.tray:active{ cursor:grabbing; }
+
+/* the table itself: dark wood, brass rim, soft inner shadow */
+.tray-surface{
+  position:absolute; inset:0;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 38% 32%, #5a3a26 0%, #3d2617 55%, #2a1a10 100%);
+  border:10px solid var(--brass);
+  box-shadow:
+    0 26px 60px rgba(122,47,20,0.30),
+    inset 0 0 60px rgba(0,0,0,0.45);
+}
+/* a faint ring showing where the plates sit */
+.tray-surface::after{
+  content:"";
+  position:absolute; inset:23%;
+  border-radius:50%;
+  border:1px dashed rgba(200,138,52,0.22);
+}
+
+.tray-plates{ position:absolute; inset:0; }
+
+.plate{
+  position:absolute; top:50%; left:50%;
+  width:27%; aspect-ratio:1/1;
+  margin:0; padding:0; border:none;
+  border-radius:50%;
+  overflow:visible;                  /* let the plate's own rim breathe */
+  cursor:pointer;
+  background:transparent;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.45));
+  transition: transform .55s cubic-bezier(.22,.8,.28,1), filter .3s ease;
+  will-change:transform;
+}
+.plate img{ width:100%; height:100%; object-fit:contain; display:block; }
+.plate:hover{ filter: drop-shadow(0 12px 20px rgba(0,0,0,0.55)); }
+.plate.selected{
+  z-index:3;
+  filter: drop-shadow(0 18px 30px rgba(0,0,0,0.55));
+}
+.plate.dimmed{ opacity:.5; }
+
+.tray-caption{
+  text-align:center; margin-top:30px; min-height:76px;
+}
+.tray-caption h3{ font-size:22px; color:var(--teal-deep); margin-bottom:4px; }
+.tray-caption .price{ display:inline-block; font-weight:700; color:var(--clay); margin-bottom:6px; }
+.tray-caption p{ font-size:14.5px; opacity:.8; max-width:52ch; margin:0 auto; }
+.tray-caption .hint{ font-size:13.5px; opacity:.6; }
+
+@media (max-width:640px){
+  .tray{ width:min(340px, 92vw); }
+  .plate{ width:30%; }
+  .tray-surface{ border-width:7px; }
+  .tray-caption h3{ font-size:19px; }
+}
+@media (prefers-reduced-motion: reduce){
+  .plate{ transition:none !important; }
 }
 
 /* ============================================================
@@ -527,25 +688,36 @@ body.lang-ar .logo{ font-family:'Lalezar', sans-serif; font-size:22px; }
 }
 .video-row, .photo-row{
   overflow:hidden;
+  direction:ltr;               /* lay the marquee out from the left, independent of page RTL */
   -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
           mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
 }
 .photo-row{ margin-top:6px; }
 
 .media-marquee{
-  display:flex; width:max-content;
+  display:flex; width:max-content; gap:0;
   animation: marqueeLeft var(--marquee-duration, 40s) linear infinite;
 }
-.media-marquee[data-dir="ltr"]{ animation-name: marqueeRight; }
+/* one row scrolls left, the other scrolls right */
+.photo-row .media-marquee{ animation-name: marqueeRight; }
 .video-row:hover .media-marquee,
 .video-row:active .media-marquee,
 .photo-row:hover .media-marquee,
 .photo-row:active .media-marquee{ animation-play-state: paused; }
 
+/* -50% of the marquee = exactly one of the two identical tracks, so the
+   loop point is invisible: as the first track scrolls off one edge, the
+   second (identical) track is precisely in its place. */
 @keyframes marqueeLeft{  from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 @keyframes marqueeRight{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
 
-.media-track{ display:flex; gap:16px; padding:6px 8px 16px; }
+/* Each track holds the tiles. Right padding equals the gap so the two
+   flush tracks keep even spacing across the seam. */
+.media-track{
+  display:flex; gap:16px;
+  padding:6px 16px 16px 0;
+  box-sizing:content-box;
+}
 
 .media-tile{
   position:relative; flex:0 0 auto;

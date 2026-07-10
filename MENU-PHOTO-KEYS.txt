@@ -63,3 +63,13 @@ JUICES / العصائر
   grape-juice          = Grape / عنب (AED 10)
   cold-drinks          = Cold Drinks / مشروب بارد (AED 4/10)
   water                = Water / ماء (AED 2/4)
+
+--- SIGNATURE TRAY (round plate cutouts, transparent PNG) ---
+chicken-mandi-plate.png  = Chicken Mandi (tray)
+haneeth-shoulder.png     = Haneeth Shoulder (tray)
+sherry-fish.png          = Sherry Fish (tray)
+To add a dish to the tray: drop a top-down plate PNG in assets/menu/
+and add an entry to the SIGNATURE array in js/data.js.
+chicken-madbi-plate.png    = Chicken Madbi (tray)
+chicken-madghot-plate.png  = Chicken Madghot (tray)
+chicken-madfoon-plate.png  = Chicken Madfoon (tray)

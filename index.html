@@ -46,10 +46,9 @@
     <nav id="mainNav">
       <ul>
         <li><a href="#about"><span class="ar">قصتنا</span><span class="en">Our Story</span></a></li>
-        <li><a href="#menu"><span class="ar">القائمة</span><span class="en">Menu</span></a></li>
-        <li><a href="#printed-menu"><span class="ar">القائمة الأصلية</span><span class="en">Printed Menu</span></a></li>
-        <li><a href="#videos"><span class="ar">فيديوهات</span><span class="en">Videos</span></a></li>
+        <li><a href="#menu"><span class="ar">قائمتنا</span><span class="en">Our Menu</span></a></li>
         <li><a href="#seating"><span class="ar">الجلسات</span><span class="en">Seating</span></a></li>
+        <li><a href="#videos"><span class="ar">فيديوهات</span><span class="en">Videos</span></a></li>
         <li><a href="#location"><span class="ar">الموقع</span><span class="en">Location</span></a></li>
         <li><a href="#contact"><span class="ar">تواصل</span><span class="en">Contact</span></a></li>
       </ul>
@@ -70,10 +69,9 @@
   <nav>
     <ul>
       <li><a href="#about"><span class="ar">قصتنا</span><span class="en">Our Story</span></a></li>
-      <li><a href="#menu"><span class="ar">القائمة</span><span class="en">Menu</span></a></li>
-      <li><a href="#printed-menu"><span class="ar">القائمة الأصلية</span><span class="en">Printed Menu</span></a></li>
-      <li><a href="#videos"><span class="ar">فيديوهات</span><span class="en">Videos</span></a></li>
+      <li><a href="#menu"><span class="ar">قائمتنا</span><span class="en">Our Menu</span></a></li>
       <li><a href="#seating"><span class="ar">الجلسات</span><span class="en">Seating</span></a></li>
+      <li><a href="#videos"><span class="ar">فيديوهات</span><span class="en">Videos</span></a></li>
       <li><a href="#location"><span class="ar">الموقع</span><span class="en">Location</span></a></li>
       <li><a href="#contact"><span class="ar">تواصل</span><span class="en">Contact</span></a></li>
     </ul>
@@ -101,24 +99,10 @@
       </div>
     </div>
     <div class="hero-visual">
-      <div class="arch-frame">
+      <div class="hero-frame">
         <div class="photo-wrap">
-          <img src="assets/site/dar-al-hajar.jpg" alt="دار الحجر — Dar al-Hajar, the iconic Yemeni Rock Palace">
+          <img src="assets/site/hero-dish.jpg" alt="ذبيحة كاملة على أرز المندي مع المرق والسلطات — a full lamb mandi platter with broth and salads">
         </div>
-        <!-- Fanlight: a stylised nod to Sana'a's qamariya stained-glass arch windows -->
-        <svg class="fanlight" viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0 120 A150 150 0 0 1 300 120 Z" fill="none"/>
-          <g stroke-width="2.4" stroke-linecap="round" opacity="0.55">
-            <path d="M150 120 L150 6" stroke="var(--brass)"/>
-            <path d="M150 120 L84 20" stroke="var(--brass)"/>
-            <path d="M150 120 L216 20" stroke="var(--brass)"/>
-            <path d="M150 120 L40 55" stroke="var(--brass)"/>
-            <path d="M150 120 L260 55" stroke="var(--brass)"/>
-            <path d="M150 120 L14 100" stroke="var(--brass)"/>
-            <path d="M150 120 L286 100" stroke="var(--brass)"/>
-          </g>
-          <path d="M0 120 A150 150 0 0 1 300 120" fill="none" stroke="var(--brass)" stroke-width="3"/>
-        </svg>
       </div>
     </div>
   </div>
@@ -152,6 +136,32 @@
     </div>
   </div>
 </section>
+
+<div class="motif-divider motif-divider--merlon" aria-hidden="true"></div>
+
+<!-- ================= SIGNATURE DISHES (rotating tray) ================= -->
+<section class="signature" id="signature">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow"><span class="ar">الأشهر لدينا</span><span class="en">Our Best</span></div>
+      <h2><span class="ar">أطباقنا المميزة</span><span class="en">Our Signature Dishes</span></h2>
+      <p><span class="ar">اضغط على أي طبق ليقترب منك، واضغط مرة أخرى ليعود إلى مكانه.</span><span class="en">Tap any dish to bring it closer — tap again to send it back to the table.</span></p>
+    </div>
+
+    <!-- The tray. Plates are placed around the circle by js/main.js, so the
+         number of dishes can change without touching this markup. -->
+    <div class="tray-wrap">
+      <div class="tray" id="tray" role="group" aria-label="Signature dishes tray">
+        <div class="tray-surface" aria-hidden="true"></div>
+        <div class="tray-plates" id="trayPlates"></div>
+      </div>
+    </div>
+
+    <div class="tray-caption" id="trayCaption" aria-live="polite"></div>
+  </div>
+</section>
+
+<div class="motif-divider motif-divider--interlock" aria-hidden="true"></div>
 
 <!-- ================= MENU (Rising & Falling Columns) ================= -->
 <section class="menu" id="menu">
@@ -217,6 +227,8 @@
   </div>
 </section>
 
+<div class="motif-divider motif-divider--zigzag" aria-hidden="true"></div>
+
 <!-- ================= SEATING ================= -->
 <section class="seating" id="seating">
   <div class="container">
@@ -253,6 +265,8 @@
   </div>
 </section>
 
+<div class="motif-divider motif-divider--arcade" aria-hidden="true"></div>
+
 <!-- ================= TAKE A LOOK (videos + photos) ================= -->
 <section class="videos" id="videos">
   <div class="container">
@@ -288,6 +302,8 @@
     <p class="media-modal-desc" id="photoModalDesc"></p>
   </div>
 </div>
+
+<div class="motif-divider motif-divider--beads" aria-hidden="true"></div>
 
 <!-- ================= LOCATION ================= -->
 <section class="location" id="location">
@@ -364,7 +380,7 @@
       <div class="footer-col">
         <h4><span class="ar">روابط سريعة</span><span class="en">Quick Links</span></h4>
         <ul>
-          <li><a href="#menu"><span class="ar">القائمة</span><span class="en">Menu</span></a></li>
+          <li><a href="#menu"><span class="ar">قائمتنا</span><span class="en">Our Menu</span></a></li>
           <li><a href="#seating"><span class="ar">الجلسات</span><span class="en">Seating</span></a></li>
           <li><a href="#location"><span class="ar">الموقع</span><span class="en">Location</span></a></li>
         </ul>

@@ -208,3 +208,38 @@ const PHOTOS = [
   { key: "fresh-juices",    src: photoImg("juices"),   ar: "تشكيلة من عصائرنا الطازجة.", en: "A selection of our fresh juices." },
   { key: "storefront",      src: photoImg("front"),    ar: "واجهة المطعم في ديسكفري غاردنز.", en: "Our storefront in Discovery Gardens." },
 ];
+
+// ============================================================
+// Signature dishes — the rotating tray section.
+// Add or remove entries freely: the tray spaces them evenly around
+// the circle automatically, so 3 today and 8 later both just work.
+// `img` should be a photo of the plate shot from directly above; the
+// tray crops it to a circle, so no transparent cut-out is needed.
+// ============================================================
+
+const SIGNATURE = [
+  { key: "chicken-mandi-plate", img: "assets/menu/chicken-mandi-plate.png",
+    ar: "دجاج مندي", en: "Chicken Mandi", price: "AED 33",
+    descAr: "نصف دجاجة محضّرة ببهارات المندي، تُطهى في التنور وتُقدَّم مع الأرز والسلطة والشوربة والروب والشطني.",
+    descEn: "Half a chicken prepared with mandi spices, cooked in the tandoor and served with rice, salad, soup, yogurt and shitni." },
+  { key: "haneeth-shoulder", img: "assets/menu/haneeth-shoulder.png",
+    ar: "لحم كتف حنيذ", en: "Haneeth Shoulder", price: "AED 90",
+    descAr: "كتف لحم غنم يُطهى ببطء على طريقة الحنيذ حتى يصبح طريًا للغاية، ويُقدَّم على أرز المندي.",
+    descEn: "Lamb shoulder slow-cooked haneeth-style until meltingly tender, served over mandi rice." },
+  { key: "sherry-fish", img: "assets/menu/sherry-fish.png",
+    ar: "سمك شعري", en: "Sherry Fish", price: "AED 55",
+    descAr: "سمك شعري طازج مشوي بالبهارات، يُقدَّم على أرز سيّد بالزعفران.",
+    descEn: "Fresh sherry fish grilled with spices, served over saffron-scented rice." },
+  { key: "chicken-madbi-plate", img: "assets/menu/chicken-madbi-plate.png",
+    ar: "دجاج مظبي", en: "Chicken Madbi", price: "AED 35",
+    descAr: "نصف دجاجة مشوية على الفحم، تُقدَّم مع الأرز والسلطة والشوربة والروب والشطني.",
+    descEn: "Half a chicken grilled over charcoal, served with rice, salad, soup, yogurt and shitni." },
+  { key: "chicken-madghot-plate", img: "assets/menu/chicken-madghot-plate.png",
+    ar: "دجاج مظغوط", en: "Chicken Madghot", price: "AED 35",
+    descAr: "دجاج مضغوط متبّل بخلطة توابل بيتية، طري ومتشرّب بالنكهات.",
+    descEn: "Pressure-cooked chicken seasoned with a house spice blend — tender and full of flavor." },
+  { key: "chicken-madfoon-plate", img: "assets/menu/chicken-madfoon-plate.png",
+    ar: "دجاج مدفون", en: "Chicken Madfoon", price: "AED 35",
+    descAr: "نصف دجاجة مدفونة في التنور مع بهارات خاصة، تُقدَّم مع الأرز والسلطة والشوربة والروب والشطني.",
+    descEn: "Half a chicken buried and baked in the oven with special spices, served with rice, salad, soup, yogurt and shitni." },
+];
